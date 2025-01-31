@@ -4,7 +4,7 @@
 #SBATCH --nodes=1                   # Number of nodes
 #SBATCH --ntasks-per-node=64  # Number of tasks (MPI processes)
 #SBATCH --time=48:00:00               # Run time (hh:mm:ss)
-#SBATCH --output={input}equil_%j.out    # Standard output and error log
+#SBATCH --output={input}bulk_%j.out    # Standard output and error log
 #SBATCH --account=csd799
 #SBATCH --mail-type=all
 
