@@ -44,6 +44,7 @@ lmp_log_file={input}.log
 
 # LAMMPS executable and parameters
 PARALLEL="mpirun -n 64"
+#Use your lammps directory
 LMP="/home/rramji/codes/LAMMPS/speed_lammps/build_custom/lmp_rob -var rtemp 300 -var press 1"
 
 # Echo job details
@@ -75,10 +76,6 @@ module load netlib-lapack
 lmp_equil_file=in.{input}equil
 lmp_data_file=data.{input}equil
 lmp_log_file={input}equil.log
-
-# LAMMPS executable and parameters
-PARALLEL="mpirun -n 64"
-LMP="/home/rramji/codes/LAMMPS/speed_lammps/build_custom/lmp_rob -var rtemp 300 -var press 1"
 
 # Echo job details
 echo "LAMMPS dynamics of {input}equil at 300K"
