@@ -36,6 +36,7 @@ lmp_log_file=bulk{input}.log
 
 # LAMMPS executable and parameters
 PARALLEL="mpirun -n 64"
+#Use your lammps directory
 LMP="/home/rramji/codes/LAMMPS/speed_lammps/build_custom/lmp_rob -var rtemp 2000 -var press 1"
 
 # Echo job details
