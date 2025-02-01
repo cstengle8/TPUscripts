@@ -60,7 +60,7 @@ module load openbabel/3.0.0
 
 obabel -imol2 {input}vmd.mol2 -obgf -O{input}min.bgf
 
-~/ATLAS-toolkit/scripts/autoType.pl -i {input}min.bgf -f ~/ATLAS-toolkit/ff/DREIDING2.21.ff -t bgf -s {input}Typed.bgf
+~/ATLAS-toolkit/scripts/autoType.pl -i {input}min.bgf -f ~/ATLAS-toolkit/ff/DREIDING2.21.ff -t bgf -s {input}typed.bgf
 
 sed -i '/^CRYSTX/d' {input}typed.bgf
 
