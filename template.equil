@@ -25,7 +25,7 @@ variable             input string in.TPU4equil
 variable             sname string TPU4equil
                      
                      
-timestep             1
+timestep             0.5
                      
 print                .
 print                ==========================================
