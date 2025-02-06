@@ -1,11 +1,10 @@
-# Script to update mol2 coordinates from last frame of trajectory
 package require topotools
 
-# Load the mol2 file first to get topology
+output="TPU4.`basename --suffix .mol2 $1`npt.lammpstrj"
+
 mol new TPU4.mol2 type mol2 waitfor all
 
-# Load the trajectory file
-mol addfile TPU4.300K.npt.lammpstrj type lammpstrj waitfor all
+mol addfile TPU4.$1.npt.lammpstrj type lammpstrj waitfor all
 
 # Get the number of frames
 set nf [molinfo top get numframes]
