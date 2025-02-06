@@ -62,7 +62,7 @@ print                ================================================
 print                "NPT equilibration dynamics "
 print                ================================================
 
-fix                  2 all npt temp 1000 1000 100.0 iso 1.0 1.0 2000
+fix                  2 all npt temp ${rtemp} ${rtemp} 100.0 iso 1.0 1.0 2000
 fix recenter all recenter INIT INIT INIT
 restart              10000 ${sname}.1000K.*.restart
 dump                 1 all custom 1000 ${sname}.1000K.npt.lammpstrj id type xu yu zu vx vy vz
