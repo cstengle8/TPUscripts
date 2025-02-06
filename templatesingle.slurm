@@ -35,7 +35,7 @@ sed -i 's/H_HB/H_/g' {input}o.mol2
 module load gcc/9.2.0
 module load netlib-lapack
 
-cp template.pool in.{input}
+cp template.minimize in.{input}
 
 # File names
 lmp_equil_file=in.{input}
