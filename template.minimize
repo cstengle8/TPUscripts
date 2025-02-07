@@ -11,7 +11,7 @@ dihedral_style       harmonic
 improper_style       none
 kspace_style         pppm 0.001
                      
-read_data            data.TPU4
+read_data            data.{input}
                      
                      
                      
