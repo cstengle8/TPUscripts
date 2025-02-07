@@ -29,6 +29,8 @@ sed -i '/^CRYSTX/d' {input}post.bgf
 
 ~/ATLAS-toolkit/scripts/createLammpsInput.pl -b replicated{input}.bgf -f "~/ff/DREIDING2.21.ff" -s bulk{input}
 
+cp {input}template.bulk in.bulk{input}
+
 # File names
 lmp_equil_file=in.bulk{input}
 lmp_data_file=data.bulk{input}
