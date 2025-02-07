@@ -15,10 +15,10 @@ get_input() {
 }
 
 prefix=$(get_input "Enter Job Prefix:" "")
-rtemp1=$(get_input "Enter rtemp1:" "")
-rtemp2=$(get_input "Enter rtemp2:" "")
-rtemp3=$(get_input "Enter rtemp3:" "")
-ctemp=$(get_input "Enter ctemp:" "")
+rtemp1=$(get_input "Enter UFF equilibration temp:" "")
+rtemp2=$(get_input "Enter single chain equilibration temp:" "")
+rtemp3=$(get_input "Enter bulk chain heating temp:" "")
+ctemp=$(get_input "Enter bulk chain equilibration temp:" "")
 partition=$(get_input "Enter Partition:" "")
 nodes=$(get_input "Enter Nodes:" "")
 tasks=$(get_input "Enter Tasks/Node:" "")
