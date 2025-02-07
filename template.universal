@@ -6,9 +6,15 @@ get_input() {
     local default="$2"
     local result
 
+    # Launch whiptail inputbox and capture its output.
     result=$(whiptail --inputbox "$prompt" 8 60 "$default" --title "Simulation Variables" 3>&1 1>&2 2>&3)
-    if [ $? -ne 0 ]; then
-        echo "User cancelled."
+    local ret=$?
+    if [ $ret -ne 0 ]; then
+        echo "User cancelled." >&2
+        exit 1
+    fi
+    if [ -z "$result" ]; then
+        echo "No input provided, cancelling." >&2
         exit 1
     fi
     echo "$result"
