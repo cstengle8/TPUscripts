@@ -18,15 +18,15 @@ get_input() {
 }
 
 prefix=$(get_input "Enter Job Prefix:" "")
-rtemp1=$(get_input "Enter UFF equilibration temp (K):" "")
-rtemp2=$(get_input "Enter single chain equilibration temp (K):" "")
-rtemp3=$(get_input "Enter bulk chain heating temp (K):" "")
-ctemp=$(get_input "Enter bulk chain equilibration temp (K):" "")
-partition=$(get_input "Enter Partition:" "")
-nodes=$(get_input "Enter Nodes:" "")
-tasks=$(get_input "Enter Tasks/Node:" "")
-walltime=$(get_input "Enter Walltime (hh:mm:ss):" "")
-account=$(get_input "Enter Account:" "")
+rtemp1=$(get_input "Enter UFF equilibration temp (K):" "300")
+rtemp2=$(get_input "Enter single chain equilibration temp (K):" "800")
+rtemp3=$(get_input "Enter bulk chain heating temp (K):" "1200")
+ctemp=$(get_input "Enter bulk chain equilibration temp (K):" "300")
+partition=$(get_input "Enter Partition:" "shared")
+nodes=$(get_input "Enter Nodes:" "1")
+tasks=$(get_input "Enter Tasks/Node:" "64")
+walltime=$(get_input "Enter Walltime (hh:mm:ss):" "48:00:00")
+account=$(get_input "Enter Account:" "csd799")
 
 
 for var in prefix rtemp1 rtemp2 rtemp3 ctemp partition nodes tasks walltime account; do
