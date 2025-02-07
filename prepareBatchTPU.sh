@@ -11,7 +11,7 @@ get_input() {
         exit 1
     fi
     if [ -z "$result" ]; then
-        echo "No input provided, cancelling." >&2
+        echo "No input provided." >&2
         exit 1
     fi
     echo "$result"
