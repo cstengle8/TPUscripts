@@ -1,41 +1,29 @@
 #!/bin/bash
-tempfile=$(mktemp /tmp/form.XXXXXX)
 
-FORM_TITLE="Simulation Variables"
-FORM_HEIGHT=15
-FORM_WIDTH=60
-FORM_FIELDS=10
 
-whiptail --form "$FORM_TITLE" \
-  $FORM_HEIGHT $FORM_WIDTH $FORM_FIELDS \
-  "Job Prefix:"          1 1 ""    1 20 20 0 \
-  "rtemp1:"              2 1 ""    2 20 20 0 \
-  "rtemp2:"              3 1 ""    3 20 20 0 \
-  "rtemp3:"              4 1 ""    4 20 20 0 \
-  "ctemp:"               5 1 ""    5 20 20 0 \
-  "Partition:"           6 1 ""    6 20 20 0 \
-  "Nodes:"               7 1 ""    7 20 20 0 \
-  "Tasks/Node:"          8 1 ""    8 20 20 0 \
-  "Walltime (hh:mm:ss):" 9 1 ""    9 20 20 0 \
-  "Account:"            10 1 ""   10 20 20 0 2> "$tempfile"
+get_input() {
+    local prompt="$1"
+    local default="$2"
+    local result
 
-if [ $? -ne 0 ]; then
-    echo "User cancelled."
-    rm -f "$tempfile"
-    exit 1
-fi
+    result=$(whiptail --inputbox "$prompt" 8 60 "$default" --title "Simulation Variables" 3>&1 1>&2 2>&3)
+    if [ $? -ne 0 ]; then
+        echo "User cancelled."
+        exit 1
+    fi
+    echo "$result"
+}
 
-prefix=$(sed -n '1p' "$tempfile")
-rtemp1=$(sed -n '2p' "$tempfile")
-rtemp2=$(sed -n '3p' "$tempfile")
-rtemp3=$(sed -n '4p' "$tempfile")
-ctemp=$(sed -n '5p' "$tempfile")
-partition=$(sed -n '6p' "$tempfile")
-nodes=$(sed -n '7p' "$tempfile")
-tasks=$(sed -n '8p' "$tempfile")
-walltime=$(sed -n '9p' "$tempfile")
-account=$(sed -n '10p' "$tempfile")
-rm -f "$tempfile"
+prefix=$(get_input "Enter Job Prefix:" "")
+rtemp1=$(get_input "Enter rtemp1:" "")
+rtemp2=$(get_input "Enter rtemp2:" "")
+rtemp3=$(get_input "Enter rtemp3:" "")
+ctemp=$(get_input "Enter ctemp:" "")
+partition=$(get_input "Enter Partition:" "")
+nodes=$(get_input "Enter Nodes:" "")
+tasks=$(get_input "Enter Tasks/Node:" "")
+walltime=$(get_input "Enter Walltime (hh:mm:ss):" "")
+account=$(get_input "Enter Account:" "")
 
 echo "You entered:"
 echo "  Job Prefix:    $prefix"
@@ -49,6 +37,7 @@ echo "  Tasks/Node:    $tasks"
 echo "  Walltime:      $walltime"
 echo "  Account:       $account"
 
+
 output_single="${prefix}singlechain.slurm"
 sed "s/{input}/$prefix/g" templatesingle.slurm > "$output_single"
 sed -i "s/{rtemp1}/$rtemp1/g" "$output_single"
@@ -56,7 +45,7 @@ sed -i "s/{rtemp2}/$rtemp2/g" "$output_single"
 sed -i "s/{partition}/$partition/g" "$output_single"
 sed -i "s/{nodes}/$nodes/g" "$output_single"
 sed -i "s/{tasks}/$tasks/g" "$output_single"
-sed -i "s/{time}/$walltime/g" "$output_single"
+sed -i "s/{walltime}/$walltime/g" "$output_single"
 sed -i "s/{account}/$account/g" "$output_single"
 
 output_bulk="${prefix}bulk.slurm"
