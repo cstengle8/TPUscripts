@@ -35,7 +35,7 @@ sed -i 's/H_HB/H_/g' {input}o.mol2
 module load gcc/9.2.0
 module load netlib-lapack
 
-cp template.minimize in.{input}
+cp {input}template.minimize in.{input}
 
 # File names
 lmp_equil_file=in.{input}
@@ -70,7 +70,7 @@ sed -i '/^CRYSTX/d' {input}typed.bgf
 
 ~/ATLAS-toolkit/scripts/createLammpsInput.pl -b {input}box.bgf -f ~/ATLAS-toolkit/ff/DREIDING2.21.ff -s {input}equil
 
-cp template.equil in.{input}equil
+cp {input}template.equil in.{input}equil
 
 module load gcc/9.2.0
 module load netlib-lapack
