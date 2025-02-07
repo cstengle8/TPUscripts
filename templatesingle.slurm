@@ -186,7 +186,7 @@ print                ================================================
 
 fix                  2 all npt temp ${rtemp} ${rtemp} 100.0 iso 1.0 1.0 2000
 fix recenter all recenter INIT INIT INIT
-restart              10000 ${sname}.1000K.*.restart
+restart              10000 ${sname}.${rtemp}K.*.restart
 dump                 1 all custom 1000 ${sname}.${rtemp}K.npt.lammpstrj id type xu yu zu vx vy vz
 run                  1000000 # run for 1 ns
 unfix recenter
