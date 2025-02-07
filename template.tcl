@@ -3,8 +3,8 @@ if {$argc < 2} {
     exit 1
 }
 set arg [lindex $argv 0]
-set arg2 [string trim [exec basename $inputFilename --suffix .mol2]
-puts "Input filename: $inputFilename"
+set arg2 [lindex $argv 1]
+
 puts "Basename without .mol2: $arg2"
 
 package require topotools
