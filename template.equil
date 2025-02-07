@@ -12,7 +12,7 @@ improper_style       umbrella
 #kspace_style         pppm 0.0001
 
                      
-read_data            data.TPU4equil
+read_data            data.{input}equil
                      
                      
                      
