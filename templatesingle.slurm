@@ -55,7 +55,7 @@ echo "LAMMPS dynamics of {input} at 300K"
 # Run LAMMPS
 $PARALLEL $LMP -in ${lmp_equil_file} -log ${lmp_log_file} -var rtemp 300 -var press 1
 
-vmd -dispdev text -eofexit < template.tcl $rtemp
+vmd -dispdev text -eofexit < template.tcl $rtemp {input}.mol2
 
 module load gcc/10.2.0
 module load openbabel/3.0.0
