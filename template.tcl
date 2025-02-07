@@ -1,12 +1,15 @@
-if {$argc < 1} {
-    puts "Usage: ./script.tcl argument"
+if {$argc < 2} {
+    puts "Usage: ./script.tcl rtemp mol2"
     exit 1
 }
 set arg [lindex $argv 0]
+set arg2 [string trim [exec basename $inputFilename --suffix .mol2]
+puts "Input filename: $inputFilename"
+puts "Basename without .mol2: $arg2"
 
 package require topotools
 
-mol new TPU4.mol2 type mol2 waitfor all
+mol new ${arg2}.mol2 type mol2 waitfor all
 
 mol addfile "TPU4.${arg}.npt.lammpstrj" type lammpstrj waitfor all
 
