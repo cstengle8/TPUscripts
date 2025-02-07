@@ -20,7 +20,7 @@ animate goto $nf
 
 # Get atom coordinates from last frame and update
 set sel [atomselect top all frame last]
-$sel writemol2 TPU4vmd.mol2
+$sel writemol2 ${arg2}vmd.mol2
 $sel delete
 
 # Exit VMD
