@@ -47,7 +47,7 @@ PARALLEL="mpirun -n 64"
 #Use your lammps directory
 LMP="/home/rramji/codes/LAMMPS/speed_lammps/build_custom/lmp_rob -var rtemp 300 -var press 1"
 
-rtemp="300K"
+rtemp="300"
 
 # Echo job details
 echo "LAMMPS dynamics of {input} at 300K"
