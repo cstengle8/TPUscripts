@@ -11,7 +11,7 @@ package require topotools
 
 mol new ${arg2}.mol2 type mol2 waitfor all
 
-mol addfile "${arg2}.${arg}.npt.lammpstrj" type lammpstrj waitfor all
+mol addfile "${arg2}.${arg}K.npt.lammpstrj" type lammpstrj waitfor all
 
 # Get the number of frames
 set nf [molinfo top get numframes]
