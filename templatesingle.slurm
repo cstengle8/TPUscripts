@@ -47,7 +47,7 @@ PARALLEL="mpirun -n 64"
 #Use your lammps directory
 LMP="/home/rramji/codes/LAMMPS/speed_lammps/build_custom/lmp_rob -var rtemp 300 -var press 1"
 
-rtemp=300
+rtemp="300K"
 
 # Echo job details
 echo "LAMMPS dynamics of {input} at 300K"
@@ -55,7 +55,7 @@ echo "LAMMPS dynamics of {input} at 300K"
 # Run LAMMPS
 $PARALLEL $LMP -in ${lmp_equil_file} -log ${lmp_log_file} -var rtemp 300 -var press 1
 
-vmd -dispdev text -eofexit -args "$rtemp" "{input}" -e template.tcl
+vmd -dispdev text -e template.tcl -eofexit -args "$rtemp" "{input}"
 
 module load gcc/10.2.0
 module load openbabel/3.0.0
