@@ -1,20 +1,13 @@
 #!/bin/bash
 
-
 get_input() {
     local prompt="$1"
     local default="$2"
     local result
 
-    # Launch whiptail inputbox and capture its output.
     result=$(whiptail --inputbox "$prompt" 8 60 "$default" --title "Simulation Variables" 3>&1 1>&2 2>&3)
-    local ret=$?
-    if [ $ret -ne 0 ]; then
-        echo "User cancelled." >&2
-        exit 1
-    fi
-    if [ -z "$result" ]; then
-        echo "No input provided, cancelling." >&2
+    if [ $? -ne 0 ]; then
+        echo "User cancelled."
         exit 1
     fi
     echo "$result"
@@ -43,6 +36,12 @@ echo "  Tasks/Node:    $tasks"
 echo "  Walltime:      $walltime"
 echo "  Account:       $account"
 
+for var in prefix rtemp1 rtemp2 rtemp3 ctemp partition nodes tasks walltime account; do
+    if [ -z "${!var}" ]; then
+        echo "$var is empty. Aborting."
+        exit 1
+    fi
+done
 
 output_single="${prefix}singlechain.slurm"
 sed "s/{input}/$prefix/g" templatesingle.slurm > "$output_single"
