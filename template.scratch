@@ -9,7 +9,9 @@ FORM_FIELDS=8
 dialog --form "$FORM_TITLE" \
   $FORM_HEIGHT $FORM_WIDTH $FORM_FIELDS \
   "Job Prefix:"     1 1 ""   1 20 20 0 \
-  "rtemp:"          2 1 ""   2 20 20 0 \
+  "rtemp1:"          2 1 ""   2 20 20 0 \
+  "rtemp2:"          2 1 ""   2 20 20 0 \
+  "rtemp3:"          2 1 ""   2 20 20 0 \
   "ctemp:"          3 1 ""   3 20 20 0 \
   "Partition:"      4 1 ""   4 20 20 0 \
   "Nodes:"          5 1 ""   5 20 20 0 \
@@ -24,29 +26,34 @@ if [ $? -ne 0 ]; then
 fi
 
 prefix=$(sed -n '1p' "$tempfile")
-rtemp=$(sed -n '2p' "$tempfile")
-ctemp=$(sed -n '3p' "$tempfile")
-partition=$(sed -n '4p' "$tempfile")
-nodes=$(sed -n '5p' "$tempfile")
-tasks=$(sed -n '6p' "$tempfile")
-walltime=$(sed -n '7p' "$tempfile")
-account=$(sed -n '8p' "$tempfile")
+rtemp1=$(sed -n '2p' "$tempfile")
+rtemp2=$(sed -n '3p' "$tempfile")
+rtemp3=$(sed -n '4p' "$tempfile")
+ctemp=$(sed -n '5p' "$tempfile")
+partition=$(sed -n '46' "$tempfile")
+nodes=$(sed -n '7p' "$tempfile")
+tasks=$(sed -n '8p' "$tempfile")
+time=$(sed -n '9p' "$tempfile")
+account=$(sed -n '10p' "$tempfile")
 rm -f "$tempfile"
 
 echo "You entered:"
 echo "  Job Prefix:    $prefix"
-echo "  rtemp:         $rtemp"
+echo "  rtemp1:         $rtemp1"
+echo "  rtemp2:         $rtemp2"
+echo "  rtemp3:         $rtemp3"
 echo "  ctemp:         $ctemp"
 echo "  Partition:     $partition"
 echo "  Nodes:         $nodes"
 echo "  Tasks/Node:    $tasks"
-echo "  Walltime:      $walltime"
+echo "  Walltime:      $time"
 echo "  Account:       $account"
 
 
 output_single="${prefix}singlechain.slurm"
 sed "s/{input}/$prefix/g" templatesingle.slurm > "$output_single"
-sed -i "s/{rtemp}/$rtemp/g" "$output_single"
+sed -i "s/{rtemp1}/$rtemp1/g" "$output_single"
+sed -i "s/{rtemp2}/$rtemp2/g" "$output_single"
 sed -i "s/{partition}/$partition/g" "$output_single"
 sed -i "s/{nodes}/$nodes/g" "$output_single"
 sed -i "s/{tasks}/$tasks/g" "$output_single"
@@ -55,6 +62,13 @@ sed -i "s/{account}/$account/g" "$output_single"
 
 output_bulk="${prefix}bulk.slurm"
 sed "s/{input}/$prefix/g" templatebulk.slurm > "$output_bulk"
+sed -i "s/{rtemp3}/$rtemp3/g" "$output_bulk"
+sed -i "s/{ctemp}/$ctemp/g" "$output_bulk"
+sed -i "s/{partition}/$partition/g" "$output_bulk"
+sed -i "s/{nodes}/$nodes/g" "$output_bulk"
+sed -i "s/{tasks}/$tasks/g" "$output_bulk"
+sed -i "s/{walltime}/$walltime/g" "$output_bulk"
+sed -i "s/{account}/$account/g" "$output_bulk"
 
 output_min="${prefix}template.minimize"
 sed "s/{input}/$prefix/g" template.minimize > "$output_min"
