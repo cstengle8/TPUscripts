@@ -74,7 +74,7 @@ rtemp="{rtemp1}"
 echo "LAMMPS dynamics of {input} at {rtemp1}K"
 
 # Run LAMMPS
-$PARALLEL $LMP -in ${lmp_equil_file} -log ${lmp_log_file} -var rtemp (rtemp1) -var press 1
+$PARALLEL $LMP -in ${lmp_equil_file} -log ${lmp_log_file} -var rtemp {rtemp1} -var press 1
 
 temp_tcl=$(mktemp ./template.tcl.XXXX)
 echo "$template_tcl" > "$temp_tcl"
