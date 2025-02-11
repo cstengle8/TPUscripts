@@ -83,7 +83,7 @@ bond_style           harmonic
 angle_style          harmonic
 dihedral_style       harmonic
 improper_style       none
-#kspace_style         pppm 0.0001
+kspace_style         pppm 0.0001
                      
 read_data            data.bulk{input}
                      
@@ -91,11 +91,11 @@ read_data            data.bulk{input}
                      
 pair_modify          mix geometric
 neighbor             2.0 multi
-neigh_modify         every 1 delay 0 check yes one 3000
+neigh_modify         every 2 delay 4 check yes one 3000
 thermo_style         custom etotal ke temp pe ebond eangle edihed eimp evdwl ecoul elong press spcpu density
 thermo_modify        line multi format float %14.6f flush yes
-variable             input string in.bulkTPU4
-variable             sname string bulkTPU4
+variable             input string in.bulk{input}
+variable             sname string bulk{input}
                      
                      
 timestep             0.5
@@ -127,7 +127,7 @@ reset_timestep       0
 fix                  shakeH all shake 0.0001 20 500 m 1.0079
 velocity             all create 0.0 12345678 dist uniform
 thermo               100
-dump                 1 all custom 1000 ${sname}.heat.lammpstrj id type xu yu zu vx vy vz
+dump                 1 all custom 2000 ${sname}.heat.lammpstrj id type xu yu zu vx vy vz
 fix                  4 all nvt temp 1.0 ${rtemp} 100.0
 run                  200000
 unfix                4
@@ -141,7 +141,7 @@ print                .
                      
 fix                  2 all npt temp ${rtemp} ${rtemp} 100.0 iso 1.0 1.0 2000.0
 fix recenter all recenter INIT INIT INIT
-restart              100000 ${sname}.1000K.*.restart
+restart              100000 ${sname}.${rtemp}K.*.restart
 dump                 1 all custom 5000 ${sname}.${rtemp}K.npt.lammpstrj id type xu yu zu vx vy vz
 run                  3000000 # run for 1.5 ns
 undump               1
@@ -179,7 +179,7 @@ print                ================================================
 
 fix                  2 all npt temp ${ctemp} ${ctemp} 100.0 iso 1.0 1.0 2000
 fix recenter all recenter INIT INIT INIT
-restart              10000 ${sname}.300K.*.restart
+restart              10000 ${sname}.${ctemp}K.*.restart
 dump                 1 all custom 1000 ${sname}.${ctemp}K.npt.lammpstrj id type xu yu zu vx vy vz
 run                  1000000 # run for 0.5 ns
 unfix recenter
@@ -194,7 +194,6 @@ print                .
 
 fix                  2 all nvt temp ${ctemp} ${ctemp} 100.0
 fix recenter all recenter INIT INIT INIT
-restart              100000 ${sname}.300K.*.restart
 dump                 1 all custom 10000 ${sname}.${ctemp}K.prod.lammpstrj id type xu yu zu vx vy vz
 run                  1000000 # run for 0.5 ns
 unfix recenter
