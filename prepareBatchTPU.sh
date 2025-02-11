@@ -69,7 +69,7 @@ perl -pe '
   s/\{input\}/$ENV{"prefix"}/g;
   s/\{rtemp2\}/$ENV{"rtemp2"}/g;
   s/\{rtemp3\}/$ENV{"rtemp3"}/g;
-  s/\{ctemp\}/$ENV{"ctemp"}/g;
+  s/\{ctemp1\}/$ENV{"ctemp"}/g;
   s/\{partition\}/$ENV{"partition"}/g;
   s/\{nodes\}/$ENV{"nodes"}/g;
   s/\{tasks\}/$ENV{"tasks"}/g;
