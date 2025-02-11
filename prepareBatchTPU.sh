@@ -67,6 +67,7 @@ perl -pe '
 output_bulk="${prefix}bulk.slurm"
 perl -pe '
   s/\{input\}/$ENV{"prefix"}/g;
+  s/\{rtemp2\}/$ENV{"rtemp2"}/g;
   s/\{rtemp3\}/$ENV{"rtemp3"}/g;
   s/\{ctemp\}/$ENV{"ctemp"}/g;
   s/\{partition\}/$ENV{"partition"}/g;
