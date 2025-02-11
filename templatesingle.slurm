@@ -126,7 +126,7 @@ boundary             p p p
 dielectric           1
 special_bonds        lj/coul 0.0 0.0 1.0
                      
-pair_style           lj/charmm/coul/long/opt 13 14.00000
+pair_style           lj/cut/coul/cut 10 12
 bond_style           harmonic
 angle_style          cosine/squared
 dihedral_style       harmonic
@@ -203,7 +203,7 @@ boundary             p p p
 dielectric           1
 special_bonds        lj/coul 0.0 0.0 1.0
                      
-pair_style           lj/cut/coul/cut 15 20
+pair_style           lj/cut/coul/long/opt 9 10
 bond_style           harmonic
 angle_style          harmonic
 dihedral_style       harmonic
