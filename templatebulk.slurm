@@ -35,7 +35,7 @@ template_bulk=$(load_template "__TEMPLATE_BULK__" "__END_TEMPLATE_BULK__")
 # Main Script
 # -----------------------------
 
-~/ATLAS-toolkit/scripts/convertLammpsTrj.pl -b {input}typed.bgf -l {input}equil.300K.prod.lammpstrj -t $(grep "TIMESTEP" {input}equil.300K.prod.lammpstrj | wc -l) -m 1 -o bgf -s {input}post.bgf
+~/ATLAS-toolkit/scripts/convertLammpsTrj.pl -b {input}typed.bgf -l {input}equil.{rtemp2}K.prod.lammpstrj -t $(grep "TIMESTEP" {input}equil.{rtemp2}K.prod.lammpstrj | wc -l) -m 1 -o bgf -s {input}post.bgf
 
 sed -i '/^CRYSTX/d' {input}post.bgf
 
