@@ -61,7 +61,7 @@ LMP="/home/rramji/codes/LAMMPS/speed_lammps/build_custom/lmp_rob -var rtemp {rte
 echo "LAMMPS dynamics of {input}bulk at {rtemp3}K"
 
 # Run LAMMPS
-$PARALLEL $LMP -in ${lmp_equil_file} -log ${lmp_log_file} -var rtemp {rtemp3} -var press 1 -var ctemp {ctemp}
+$PARALLEL $LMP -in ${lmp_equil_file} -log ${lmp_log_file} -var rtemp {rtemp3} -var press 1 -var ctemp {ctemp1}
 
 exit 0 
 
