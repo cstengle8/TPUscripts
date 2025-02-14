@@ -82,7 +82,7 @@ pair_style           lj/charmm/coul/long/opt 9 10.00000
 bond_style           harmonic
 angle_style          harmonic
 dihedral_style       harmonic
-improper_style       none
+improper_style       umbrella
 kspace_style         pppm 0.0001
                      
 read_data            data.bulk{input}
