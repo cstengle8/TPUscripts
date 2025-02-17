@@ -128,10 +128,10 @@ special_bonds        lj/coul 0.0 0.0 1.0
                      
 pair_style           lj/cut/coul/cut 10 12
 bond_style           harmonic
-angle_style          cosine/squared
+angle_style          harmonic
 dihedral_style       harmonic
-improper_style       none
-kspace_style         pppm 0.001
+improper_style       umbrella
+#kspace_style         pppm 0.0001
                      
 read_data            data.{input}
                      
