@@ -126,9 +126,9 @@ boundary             p p p
 dielectric           1
 special_bonds        lj/coul 0.0 0.0 1.0
                      
-pair_style           lj/cut/coul/cut 10 12
+pair_style           lj/cut/coul/cut 9 10
 bond_style           harmonic
-angle_style          harmonic
+angle_style          cosine/squared
 dihedral_style       harmonic
 improper_style       umbrella
 #kspace_style         pppm 0.0001
@@ -208,7 +208,7 @@ bond_style           harmonic
 angle_style          harmonic
 dihedral_style       harmonic
 improper_style       umbrella
-#kspace_style         pppm 0.0001
+kspace_style         pppm 0.0001
 
                      
 read_data            data.{input}equil
