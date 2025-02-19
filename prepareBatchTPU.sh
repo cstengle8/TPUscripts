@@ -18,9 +18,9 @@ get_input() {
 }
 
 prefix=$(get_input "Enter Job Prefix:" "")
-rtemp1=$(get_input "Enter UFF equilibration temp (K):" "300")
-rtemp2=$(get_input "Enter single chain equilibration temp (K):" "800")
-rtemp3=$(get_input "Enter bulk chain heating temp (K):" "1200")
+rtemp1=$(get_input "Enter UFF equilibration temp (K):" "500")
+rtemp2=$(get_input "Enter single chain equilibration temp (K):" "500")
+rtemp3=$(get_input "Enter bulk chain heating temp (K):" "1000")
 ctemp=$(get_input "Enter bulk chain equilibration temp (K):" "300")
 partition=$(get_input "Enter Partition:" "shared")
 nodes=$(get_input "Enter Nodes:" "1")
