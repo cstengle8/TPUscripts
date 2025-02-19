@@ -39,6 +39,8 @@ restart_dir="./"
 
 cd "$restart_dir" || { echo "Error: Cannot change to directory $restart_dir"; exit 1; }
 
+#For this to work and give meaningful results one needs a successfully completed bulk equilibration, with plentiful restart files. 
+
 get_max_final() {
   local max=0
   for file in bulk*.restart; do
@@ -53,10 +55,12 @@ get_max_final() {
 }
 get_max_final
 
+sed -i "s/{final}/$final/g" "$0"
+
 echo "$template_deformation" > in.deformation{input}
 # File names
 lmp_equil_file=in.deformation{input}
-lmp_restart_file=bulk{input}.{ctemp1}K.${final}.restart
+lmp_restart_file=bulk{input}.{ctemp1}K.{final}.restart
 lmp_log_file=deformation{input}.log
 
 # LAMMPS executable and parameters
@@ -91,7 +95,7 @@ dihedral_style       harmonic
 improper_style       umbrella
 kspace_style         pppm 0.00001
 
-read_restart         bulk{input}.{ctemp1}K.${final}.restart
+read_restart         bulk{input}.{ctemp1}K.{final}.restart
 
 pair_modify          mix geometric
 neighbor             2.0 multi
