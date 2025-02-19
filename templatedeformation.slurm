@@ -75,7 +75,7 @@ exit 0
 # Embedded Template Definitions
 # -------------------------------------------
 
-#Bulk
+#Deformation
 
 __TEMPLATE_DEFORMATION__
 units                real
@@ -155,6 +155,7 @@ fix def2 all print 100 "${p1} ${t2} ${t3} ${t4} ${t5}" file ${sname}.def2.txt sc
 #thermo_style	custom step temp pxx pyy pzz lx ly lz epair ebond eangle edihed
 thermo_style custom etotal ke temp pe ebond eangle edihed eimp evdwl ecoul elong press spcpu pxx pyy pzz lx ly lz
 thermo_modify        line multi format float %14.6f flush yes
+dump       1 all custom 10000 ${sname}.${stemp}.deform.lammpstrj id type xu yu zu vx vy vz
 thermo          100
 timestep	1
 reset_timestep	0
