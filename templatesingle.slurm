@@ -20,9 +20,9 @@ module load vmd/1.9.3
 module load gcc/10.2.0
 module load openbabel/3.0.0
 
-# -----------------------------
+# -----------------------------------------------------------------------------------
 # Embedded Template Loading
-# -----------------------------
+# -----------------------------------------------------------------------------------
 
 load_template() {
     local start_marker="$1"
@@ -36,9 +36,9 @@ template_equil=$(load_template "__TEMPLATE_EQUIL__" "__END_TEMPLATE_EQUIL__")
 template_tcl=$(load_template "__TEMPLATE_TCL__" "__END_TEMPLATE_TCL__")
 
 
-# -----------------------------
+# -----------------------------------------------------------------------------------
 # Main Script
-# -----------------------------
+# -----------------------------------------------------------------------------------
 
 
 obabel -imol2 {input}.mol2 -omol2 -O{input}o.mol2
@@ -113,9 +113,9 @@ $PARALLEL $LMP -in ${lmp_equil_file} -log ${lmp_log_file} -var rtemp {rtemp2} -v
 
 exit 0
 
-# -----------------------------
+# --------------------------------------------------------------------------------------------------
 # Embedded Template Definitions
-# -----------------------------
+# --------------------------------------------------------------------------------------------------
 
 #Minimization
 
@@ -125,7 +125,8 @@ atom_style           full
 boundary             p p p
 dielectric           1
 special_bonds        lj/coul 0.0 0.0 1.0
-                     
+
+# UFF force field styles, cut pair_style to deal with large initial box volume
 pair_style           lj/cut/coul/cut 9 10
 bond_style           harmonic
 angle_style          cosine/squared
@@ -133,12 +134,11 @@ dihedral_style       harmonic
 improper_style       umbrella
 #kspace_style         pppm 0.0001
                      
-read_data            data.{input}
-                     
-                     
+read_data            data.{input}                     
                      
 pair_modify          mix geometric
 neighbor             2.0 multi
+# Increase neigh one to 3000 from default 2000 (need longer max neighbor list size)
 neigh_modify         every 2 delay 4 check yes one 3000
 thermo_style         multi
 thermo_modify        line multi format float %14.6f flush yes
