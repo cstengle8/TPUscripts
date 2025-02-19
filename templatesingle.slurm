@@ -142,8 +142,8 @@ neighbor             2.0 multi
 neigh_modify         every 2 delay 4 check yes one 3000
 thermo_style         multi
 thermo_modify        line multi format float %14.6f flush yes
-variable             input string in.TPU4
-variable             sname string TPU4
+variable             input string in.{input}
+variable             sname string {input}
                      
                      
 timestep             1
@@ -220,8 +220,8 @@ neighbor             2.0 multi
 neigh_modify         every 2 delay 4 check yes one 4500
 thermo_style custom etotal ke temp pe ebond eangle edihed eimp evdwl ecoul elong press spcpu density
 thermo_modify        line multi format float %14.6f flush yes
-variable             input string in.TPU4equil
-variable             sname string TPU4equil
+variable             input string in.{input}equil
+variable             sname string {input}equil
                      
                      
 timestep             0.5
