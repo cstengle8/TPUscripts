@@ -1,3 +1,23 @@
+# Hardcoded directory where restart files are located
+restart_dir="/path/to/restarts"
+
+# Change to the specified directory or exit if not found
+cd "$restart_dir" || { echo "Error: Cannot change to directory $restart_dir"; exit 1; }
+
+get_max_final() {
+  local max=0
+  for file in bulk*.restart; do
+    # Remove the .restart suffix and extract the integer after the last dot
+    local num="${file%.restart}"
+    num="${num##*.}"
+    # Compare and update max if needed
+    (( num > max )) && max=$num
+  done
+  final=$max
+  echo "$final"
+}
+
+
 units                real
 atom_style           full
 boundary             p p p
@@ -11,9 +31,7 @@ dihedral_style       harmonic
 improper_style       umbrella
 kspace_style         pppm 0.00001
 
-read_restart            bulk{input}.{ctemp}K.{}.restart
-
-
+read_restart         bulk{input}.{ctemp}K.$final.restart
 
 pair_modify          mix geometric
 neighbor             2.0 multi
@@ -25,6 +43,31 @@ variable             sname string deformation{input}
 
 
 timestep             1
+
+print                .
+print                =====================================
+print                "NVT dynamics to change temperature"
+print                =====================================
+
+dump                 1 all custom 1000 ${sname}.cool.lammpstrj id type xu yu zu vx vy vz
+fix                  4 all nvt temp ${ctemp} ${stemp} 100.0
+run                  200000
+unfix                4
+undump               1
+
+print                ================================================
+print                "NPT equilibration dynamics "
+print                ================================================
+
+fix                  2 all npt temp ${stemp} ${stemp} 100.0 iso 1.0 1.0 2000
+fix recenter all recenter INIT INIT INIT
+restart              100000 ${sname}.${stemp}K.*.restart
+dump                 1 all custom 1000 ${sname}.${stemp}K.npt.lammpstrj id type xu yu zu vx vy vz
+run                  1000000 # run for 1 ns
+unfix recenter
+unfix                2
+undump               1
+
 
 #####################################################
 # Uniaxial Tensile Deformation
