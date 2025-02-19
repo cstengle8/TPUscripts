@@ -22,6 +22,7 @@ rtemp1=$(get_input "Enter UFF equilibration temp (K):" "500")
 rtemp2=$(get_input "Enter single chain equilibration temp (K):" "500")
 rtemp3=$(get_input "Enter bulk chain heating temp (K):" "1000")
 ctemp=$(get_input "Enter bulk chain equilibration temp (K):" "300")
+stemp=$(get_input "Enter deformation simulation temp (K):" "300")
 partition=$(get_input "Enter Partition:" "shared")
 nodes=$(get_input "Enter Nodes:" "1")
 tasks=$(get_input "Enter Tasks/Node:" "64")
@@ -29,7 +30,7 @@ walltime=$(get_input "Enter Walltime (hh:mm:ss):" "48:00:00")
 account=$(get_input "Enter Account:" "csd799")
 
 
-for var in prefix rtemp1 rtemp2 rtemp3 ctemp partition nodes tasks walltime account; do
+for var in prefix rtemp1 rtemp2 rtemp3 ctemp stemp partition nodes tasks walltime account; do
     if [ -z "${!var}" ]; then
         echo "Variable '$var' is empty. Aborting." >&2
         exit 1
@@ -43,6 +44,7 @@ echo "  rtemp1:        $rtemp1"
 echo "  rtemp2:        $rtemp2"
 echo "  rtemp3:        $rtemp3"
 echo "  ctemp:         $ctemp"
+echo "  stemp:         $stemp"
 echo "  Partition:     $partition"
 echo "  Nodes:         $nodes"
 echo "  Tasks/Node:    $tasks"
@@ -50,7 +52,7 @@ echo "  Walltime:      $walltime"
 echo "  Account:       $account"
 
 
-export prefix rtemp1 rtemp2 rtemp3 ctemp partition nodes tasks walltime account
+export prefix rtemp1 rtemp2 rtemp3 ctemp stemp partition nodes tasks walltime account
 
 output_single="${prefix}singlechain.slurm"
 perl -pe '
@@ -77,8 +79,21 @@ perl -pe '
   s/\{account\}/$ENV{"account"}/g;
 ' templatebulk.slurm > "$output_bulk"
 
+output_deformation="${prefix}deformation.slurm"
+perl -pe '
+  s/\{input\}/$ENV{"prefix"}/g;
+  s/\{ctemp1\}/$ENV{"ctemp"}/g;
+  s/\{stemp1\}/$ENV{"stemp"}/g;
+  s/\{partition\}/$ENV{"partition"}/g;
+  s/\{nodes\}/$ENV{"nodes"}/g;
+  s/\{tasks\}/$ENV{"tasks"}/g;
+  s/\{time\}/$ENV{"walltime"}/g;
+  s/\{account\}/$ENV{"account"}/g;
+' templatedeformation.slurm > "$output_deformation"
+
 echo "Template files created:"
 echo "  $output_single"
 echo "  $output_bulk"
+echo "  $output_deformation"
 
-read -p "Press any key to exit..."
+read -p "Press Enter to exit..."
