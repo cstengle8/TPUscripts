@@ -1,7 +1,7 @@
-Scripts for equilibrating single chains, generating and equilibrating bulk chains of TPUs.
+Set of scripts designed to take an input mol2 file (TPU chain), equilibrate a single chain, replicate into a 2 x 2 x 2 bulk structure, engage in further equilibration, along with a tensile deformation simulation. 
 
-have a target mol2 file, have ATLAS-toolkit cloned to home directory, have access to slurm job submit system and expanse HPC.
+This script should work well with any mol2 file, not just a TPU chain. The replication parameters are tunable in the script, basic simulation parameters will be prompted when running prepareTPUbatch.sh. One needs access to the ATLAS-toolkit suite of scripts, slurm job submit system, lammps, and vmd. 
 
-run ./prepareBatchTPU.sh to get single chain and bulk chain .slurm files which can be used.
+Simply run prepareTPUbatch.sh in the same directory with all of the template files, and batch submission files for single chain, bulk, and deformation will be created; all with embedded lammps input templates. 
 
-template* files will be updated over time.
+The lammps simulation parameters (pair_style, etc.) are hard coded into the templates, changing them could result in simulations to break, run times to last long, etc. 
