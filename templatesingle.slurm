@@ -78,7 +78,7 @@ $PARALLEL $LMP -in ${lmp_equil_file} -log ${lmp_log_file} -var rtemp {rtemp1} -v
 
 temp_tcl=$(mktemp ./template.tcl.XXXX)
 echo "$template_tcl" > "$temp_tcl"
-vmd -dispdev text -e "$temp_tcl" -eofexit -args "$rtemp" "{input}o"
+vmd -dispdev text -e "$temp_tcl" -eofexit -args "$rtemp" "{input}o.mol2"
 rm -f "$temp_tcl"
 
 module load gcc/10.2.0
