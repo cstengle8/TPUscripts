@@ -322,7 +322,7 @@ if {$argc < 2} {
 set rtemp [lindex $argv 0]
 set prefix [lindex $argv 1]
 
-puts "Basename without .mol2: $arg2"
+puts "Basename without .mol2: $prefix"
 
 package require topotools
 
