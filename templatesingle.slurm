@@ -84,7 +84,7 @@ rm -f "$temp_tcl"
 module load gcc/10.2.0
 module load openbabel/3.0.0
 
-obabel -imol2 {input}vmd.mol2 -obgf -O{input}min.bgf
+obabel -imol2 {input}ovmd.mol2 -obgf -O{input}min.bgf
 
 ~/ATLAS-toolkit/scripts/autoType.pl -i {input}min.bgf -f ~/ATLAS-toolkit/ff/DREIDING2.21.ff -t bgf -s {input}typed.bgf
 
