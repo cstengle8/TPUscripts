@@ -78,13 +78,13 @@ $PARALLEL $LMP -in ${lmp_equil_file} -log ${lmp_log_file} -var rtemp {rtemp1} -v
 
 temp_tcl=$(mktemp ./template.tcl.XXXX)
 echo "$template_tcl" > "$temp_tcl"
-vmd -dispdev text -e "$temp_tcl" -eofexit -args "$rtemp" "{input}o.mol2"
+vmd -dispdev text -e "$temp_tcl" -eofexit -args "$rtemp" "{input}.mol2"
 rm -f "$temp_tcl"
 
 module load gcc/10.2.0
 module load openbabel/3.0.0
 
-obabel -imol2 {input}ovmd.mol2 -obgf -O{input}min.bgf
+obabel -imol2 {input}vmd.mol2 -obgf -O{input}min.bgf
 
 ~/ATLAS-toolkit/scripts/autoType.pl -i {input}min.bgf -f ~/ATLAS-toolkit/ff/DREIDING2.21.ff -t bgf -s {input}typed.bgf
 
