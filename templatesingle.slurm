@@ -76,6 +76,9 @@ echo "LAMMPS dynamics of {input} at {rtemp1}K"
 # Run LAMMPS
 $PARALLEL $LMP -in ${lmp_equil_file} -log ${lmp_log_file} -var rtemp {rtemp1} -var press 1
 
+mv {input}.mol2 {input}_original.mol2
+mv {input}o.mol2 {input}.mol2
+
 temp_tcl=$(mktemp ./template.tcl.XXXX)
 echo "$template_tcl" > "$temp_tcl"
 vmd -dispdev text -e "$temp_tcl" -eofexit -args "$rtemp" "{input}.mol2"
