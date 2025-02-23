@@ -81,7 +81,7 @@ mv {input}o.mol2 {input}.mol2
 
 temp_tcl=$(mktemp ./template.tcl.XXXX)
 echo "$template_tcl" > "$temp_tcl"
-vmd -dispdev text -e "$temp_tcl" -eofexit -args "$rtemp" "{input}.mol2"
+vmd -dispdev text -e "$temp_tcl" -eofexit -args "$rtemp" "{input}"
 rm -f "$temp_tcl"
 
 module load gcc/10.2.0
@@ -142,7 +142,7 @@ read_data            data.{input}
 pair_modify          mix geometric
 neighbor             2.0 multi
 # Increase neigh one to 3000 from default 2000 (need longer max neighbor list size)
-neigh_modify         every 2 delay 4 check yes one 3000
+neigh_modify         every 0 delay 1 check yes one 3000
 thermo_style         multi
 thermo_modify        line multi format float %14.6f flush yes
 variable             input string in.{input}
@@ -220,7 +220,7 @@ read_data            data.{input}equil
                      
 pair_modify          mix geometric
 neighbor             2.0 multi
-neigh_modify         every 2 delay 4 check yes one 4500
+neigh_modify         every 0 delay 1 check yes one 4500
 thermo_style custom etotal ke temp pe ebond eangle edihed eimp evdwl ecoul elong press spcpu density
 thermo_modify        line multi format float %14.6f flush yes
 variable             input string in.{input}equil
