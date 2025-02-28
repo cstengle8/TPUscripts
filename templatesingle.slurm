@@ -142,7 +142,7 @@ read_data            data.{input}
 pair_modify          mix geometric
 neighbor             2.0 multi
 # Increase neigh one to 3000 from default 2000 (need longer max neighbor list size)
-neigh_modify         every 0 delay 1 check yes one 3000
+neigh_modify         every 1 delay 0 check yes one 3000
 thermo_style         multi
 thermo_modify        line multi format float %14.6f flush yes
 variable             input string in.{input}
