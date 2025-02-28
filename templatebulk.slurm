@@ -41,11 +41,11 @@ sed -i '/^CRYSTX/d' {input}post.bgf
 
 ~/ATLAS-toolkit/scripts/addBoxToBGF.pl {input}post.bgf {input}primer.bgf
 
-~/ATLAS-toolkit/scripts/replicate.pl -b {input}primer.bgf -d '2 2 2' -s replicated{input}.bgf
+~/ATLAS-toolkit/scripts/autoType.pl -i {input}primer.bgf -f ~/ATLAS-toolkit/ff/DREIDING2.21.ff -t bgf -s {input}typed.bgf
 
-~/ATLAS-toolkit/scripts/autoType.pl -i replicated{input}.bgf -f ~/ATLAS-toolkit/ff/DREIDING2.21.ff -t bgf -s replicated{input}typed.bgf
+~/ATLAS-toolkit/scripts/replicate.pl -b {input}typed.bgf -d '2 2 2' -s replicated{input}.bgf
 
-~/ATLAS-toolkit/scripts/createLammpsInput.pl -b replicated{input}typed.bgf -f "~/ff/DREIDING2.21.ff" -s bulk{input}
+~/ATLAS-toolkit/scripts/createLammpsInput.pl -b replicated{input}.bgf -f "~/ff/DREIDING2.21.ff" -s bulk{input}
 
 echo "$template_bulk" > in.bulk{input}
 
