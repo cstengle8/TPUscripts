@@ -35,7 +35,7 @@ template_bulk=$(load_template "__TEMPLATE_BULK__" "__END_TEMPLATE_BULK__")
 # Main Script
 # -----------------------------
 
-~/ATLAS-toolkit/scripts/convertLammpsTrj.pl -b {input}box.bgf -l {input}equil.{rtemp2}K.prod.lammpstrj -t $(grep "TIMESTEP" {input}equil.{rtemp2}K.prod.lammpstrj | wc -l) -m 1 -o bgf -s {input}post.bgf
+~/ATLAS-toolkit/scripts/convertLammpsTrj.pl -b {input}min.bgf -l {input}.{rtemp1}K.prod.lammpstrj -t $(grep "TIMESTEP" {input}.{rtemp1}K.prod.lammpstrj | wc -l) -m 1 -o bgf -s {input}post.bgf
 
 sed -i '/^CRYSTX/d' {input}post.bgf
 
@@ -43,7 +43,9 @@ sed -i '/^CRYSTX/d' {input}post.bgf
 
 ~/ATLAS-toolkit/scripts/replicate.pl -b {input}primer.bgf -d '2 2 2' -s replicated{input}.bgf
 
-~/ATLAS-toolkit/scripts/createLammpsInput.pl -b replicated{input}.bgf -f "~/ff/DREIDING2.21.ff" -s bulk{input}
+~/ATLAS-toolkit/scripts/autoType.pl -i replicated{input}.bgf -f ~/ATLAS-toolkit/ff/DREIDING2.21.ff -t bgf -s replicated{input}typed.bgf
+
+~/ATLAS-toolkit/scripts/createLammpsInput.pl -b replicated{input}typed.bgf -f "~/ff/DREIDING2.21.ff" -s bulk{input}
 
 echo "$template_bulk" > in.bulk{input}
 
@@ -55,13 +57,13 @@ lmp_log_file=bulk{input}.log
 # LAMMPS executable and parameters
 PARALLEL="mpirun -n 64"
 #Use your lammps directory
-LMP="/home/rramji/codes/LAMMPS/speed_lammps/build_custom/lmp_rob -var rtemp {rtemp3} -var press 1"
+LMP="/home/rramji/codes/LAMMPS/speed_lammps/build_custom/lmp_rob -var rtemp {rtemp2} -var press 1"
 
 # Echo job details
-echo "LAMMPS dynamics of {input}bulk at {rtemp3}K"
+echo "LAMMPS dynamics of {input}bulk at {rtemp2}K"
 
 # Run LAMMPS
-$PARALLEL $LMP -in ${lmp_equil_file} -log ${lmp_log_file} -var rtemp {rtemp3} -var press 1 -var ctemp {ctemp1}
+$PARALLEL $LMP -in ${lmp_equil_file} -log ${lmp_log_file} -var rtemp {rtemp2} -var press 1 -var ctemp {ctemp1}
 
 exit 0 
 
