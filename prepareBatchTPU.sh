@@ -18,9 +18,8 @@ get_input() {
 }
 
 prefix=$(get_input "Enter Job Prefix:" "")
-rtemp1=$(get_input "Enter UFF equilibration temp (K):" "500")
-rtemp2=$(get_input "Enter single chain equilibration temp (K):" "500")
-rtemp3=$(get_input "Enter bulk chain heating temp (K):" "1000")
+rtemp1=$(get_input "Enter single chain equilibration temp (K):" "500")
+rtemp2=$(get_input "Enter bulk chain heating temp (K):" "1000")
 ctemp=$(get_input "Enter bulk chain equilibration temp (K):" "300")
 stemp=$(get_input "Enter deformation simulation temp (K):" "300")
 partition=$(get_input "Enter Partition:" "shared")
@@ -30,7 +29,7 @@ walltime=$(get_input "Enter Walltime (hh:mm:ss):" "48:00:00")
 account=$(get_input "Enter Account:" "csd799")
 
 
-for var in prefix rtemp1 rtemp2 rtemp3 ctemp stemp partition nodes tasks walltime account; do
+for var in prefix rtemp1 rtemp2 ctemp stemp partition nodes tasks walltime account; do
     if [ -z "${!var}" ]; then
         echo "Variable '$var' is empty. Aborting." >&2
         exit 1
@@ -41,8 +40,7 @@ done
 echo "You entered:"
 echo "  Job Prefix:    $prefix"
 echo "  rtemp1:        $rtemp1"
-echo "  rtemp2:        $rtemp2"
-echo "  rtemp3:        $rtemp3"
+echo "  rtemp3:        $rtemp2"
 echo "  ctemp:         $ctemp"
 echo "  stemp:         $stemp"
 echo "  Partition:     $partition"
@@ -52,13 +50,12 @@ echo "  Walltime:      $walltime"
 echo "  Account:       $account"
 
 
-export prefix rtemp1 rtemp2 rtemp3 ctemp stemp partition nodes tasks walltime account
+export prefix rtemp1 rtemp2 ctemp stemp partition nodes tasks walltime account
 
 output_single="${prefix}singlechain.slurm"
 perl -pe '
   s/\{input\}/$ENV{"prefix"}/g;
   s/\{rtemp1\}/$ENV{"rtemp1"}/g;
-  s/\{rtemp2\}/$ENV{"rtemp2"}/g;
   s/\{partition\}/$ENV{"partition"}/g;
   s/\{nodes\}/$ENV{"nodes"}/g;
   s/\{tasks\}/$ENV{"tasks"}/g;
@@ -69,8 +66,7 @@ perl -pe '
 output_bulk="${prefix}bulk.slurm"
 perl -pe '
   s/\{input\}/$ENV{"prefix"}/g;
-  s/\{rtemp2\}/$ENV{"rtemp2"}/g;
-  s/\{rtemp3\}/$ENV{"rtemp3"}/g;
+  s/\{rtemp3\}/$ENV{"rtemp2"}/g;
   s/\{ctemp1\}/$ENV{"ctemp"}/g;
   s/\{partition\}/$ENV{"partition"}/g;
   s/\{nodes\}/$ENV{"nodes"}/g;
