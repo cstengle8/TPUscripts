@@ -220,7 +220,7 @@ read_data            data.{input}equil
                      
 pair_modify          mix geometric
 neighbor             2.0 multi
-neigh_modify         every 0 delay 1 check yes one 4500
+neigh_modify         every 0 delay 1 check yes one 3000
 thermo_style custom etotal ke temp pe ebond eangle edihed eimp evdwl ecoul elong press spcpu density
 thermo_modify        line multi format float %14.6f flush yes
 variable             input string in.{input}equil
