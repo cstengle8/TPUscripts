@@ -52,6 +52,18 @@ sed -i 's/H_HB/H_/g' {input}o.mol2
 
 ~/ATLAS-toolkit/scripts/createLammpsInput.pl -b {input}o.mol2 -f "~/ATLAS-toolkit/ff/UFF.ff" -t min -s {input}
 
+max=$(awk '/xlo xhi|ylo yhi|zlo zhi/ {
+    for(i=1; i<=NF; i++){
+        # Check if the field is a floating-point number.
+        if($i ~ /^-?[0-9]+\.[0-9]+$/){
+            n = ($i < 0 ? -$i : $i)   # compute absolute value
+            if(n > max) { max = n }
+        }
+    }
+} END { printf "%.6f", max }' data.{input})
+
+sed -Ei '/(xlo xhi|ylo yhi|zlo zhi)/ s/(-?)[0-9]+\.[0-9]+/\1'"$max"'/g' data.{input}
+
 module load gcc/9.2.0
 module load netlib-lapack
 
