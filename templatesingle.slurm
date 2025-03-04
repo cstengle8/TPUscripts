@@ -54,9 +54,8 @@ sed -i 's/H_HB/H_/g' {input}o.mol2
 
 max=$(awk '/xlo xhi|ylo yhi|zlo zhi/ {
     for(i=1; i<=NF; i++){
-        # Check if the field is a floating-point number.
         if($i ~ /^-?[0-9]+\.[0-9]+$/){
-            n = ($i < 0 ? -$i : $i)   # compute absolute value
+            n = ($i < 0 ? -$i : $i)   
             if(n > max) { max = n }
         }
     }
