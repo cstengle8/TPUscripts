@@ -115,7 +115,7 @@ dielectric           1
 special_bonds        lj/coul 0.0 0.0 1.0
 
 # UFF force field styles, cut pair_style to deal with large initial box volume
-pair_style           lj/cut/coul/cut 13 14
+pair_style           lj/cut/coul/cut 9 10
 bond_style           harmonic
 angle_style          harmonic
 dihedral_style       harmonic
