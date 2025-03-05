@@ -40,7 +40,7 @@ done
 echo "You entered:"
 echo "  Job Prefix:    $prefix"
 echo "  rtemp1:        $rtemp1"
-echo "  rtemp3:        $rtemp2"
+echo "  rtemp2:        $rtemp2"
 echo "  ctemp:         $ctemp"
 echo "  stemp:         $stemp"
 echo "  Partition:     $partition"
@@ -66,7 +66,8 @@ perl -pe '
 output_bulk="${prefix}bulk.slurm"
 perl -pe '
   s/\{input\}/$ENV{"prefix"}/g;
-  s/\{rtemp3\}/$ENV{"rtemp2"}/g;
+  s/\{rtemp1\}/$ENV{"rtemp1"}/g;
+  s/\{rtemp2\}/$ENV{"rtemp2"}/g;
   s/\{ctemp1\}/$ENV{"ctemp"}/g;
   s/\{partition\}/$ENV{"partition"}/g;
   s/\{nodes\}/$ENV{"nodes"}/g;
