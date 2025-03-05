@@ -131,7 +131,7 @@ velocity             all create 0.0 12345678 dist uniform
 thermo               100
 dump                 1 all custom 2000 ${sname}.heat.lammpstrj id type xu yu zu vx vy vz
 fix                  4 all nvt temp 1.0 ${rtemp} 100.0
-run                  200000
+run                  100000
 unfix                4
 undump               1
                      
@@ -145,7 +145,7 @@ fix                  2 all npt temp ${rtemp} ${rtemp} 100.0 iso 1.0 1.0 2000.0
 fix recenter all recenter INIT INIT INIT
 restart              100000 ${sname}.${rtemp}K.*.restart
 dump                 1 all custom 5000 ${sname}.${rtemp}K.npt.lammpstrj id type xu yu zu vx vy vz
-run                  3000000 # run for 1.5 ns
+run                  1000000 # run for 1.5 ns
 undump               1
 unfix recenter
 unfix                2
@@ -159,7 +159,7 @@ print                .
 fix                  2 all nvt temp ${rtemp} ${rtemp} 100.0
 fix recenter all recenter INIT INIT INIT
 dump                 1 all custom 1000 ${sname}.${rtemp}K.prod.lammpstrj id type xu yu zu vx vy vz
-run                  3000000 # run for 1.5 ns
+run                  1000000 # run for 1.5 ns
 unfix recenter
 unfix                2
 undump               1
