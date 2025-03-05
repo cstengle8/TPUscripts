@@ -108,6 +108,7 @@ print                "500 steps CG Minimization"
 print                ==========================================
 print                .
                      
+fix                  7 all balance 1000 1.1 shift xyz 10 1.1
 dump                 1 all custom 25 ${sname}.min.lammpstrj id type xu yu zu vx vy vz
 thermo               10
 min_style            sd
@@ -200,5 +201,6 @@ dump                 1 all custom 10000 ${sname}.${ctemp}K.prod.lammpstrj id typ
 run                  1000000 # run for 0.5 ns
 unfix recenter
 unfix                2
+unfix                7
 undump               1
 __END_TEMPLATE_BULK__
