@@ -35,15 +35,13 @@ template_bulk=$(load_template "__TEMPLATE_BULK__" "__END_TEMPLATE_BULK__")
 # Main Script
 # -----------------------------
 
-~/ATLAS-toolkit/scripts/convertLammpsTrj.pl -b {input}_equil.bgf -l {input}.{rtemp1}K.prod.lammpstrj -t $(grep "TIMESTEP" {input}.{rtemp1}K.prod.lammpstrj | wc -l) -m 1 -o bgf -s {input}post.bgf
+~/ATLAS-toolkit/scripts/autoType.pl -i {input}_equil.bgf -f ~/ATLAS-toolkit/ff/DREIDING2.21.ff -t bgf -s {input}typed.bgf
 
-sed -i '/^CRYSTX/d' {input}post.bgf
+~/ATLAS-toolkit/scripts/replicate.pl -b {input}typed.bgf -d '2 2 2' -s replicated{input}_pre.bgf
 
-~/ATLAS-toolkit/scripts/addBoxToBGF.pl {input}post.bgf {input}primer.bgf
+sed -i '/^CRYSTX/d' replicated{input}_pre.bgf
 
-~/ATLAS-toolkit/scripts/autoType.pl -i {input}primer.bgf -f ~/ATLAS-toolkit/ff/DREIDING2.21.ff -t bgf -s {input}typed.bgf
-
-~/ATLAS-toolkit/scripts/replicate.pl -b {input}typed.bgf -d '2 2 2' -s replicated{input}.bgf
+~/ATLAS-toolkit/scripts/addBoxToBGF.pl replicated{input}_pre.bgf replicated{input}.bgf
 
 ~/ATLAS-toolkit/scripts/createLammpsInput.pl -b replicated{input}.bgf -f "~/ff/DREIDING2.21.ff" -s bulk{input}
 
