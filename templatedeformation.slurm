@@ -44,8 +44,6 @@ get_max_final
 
 sed -i "s/{final}/$final/g" "$0"
 
-echo "$template_deformation" >
-
 load_template() {
     local start_marker="$1"
     local end_marker="$2"
@@ -59,7 +57,7 @@ template_deformation=$(load_template "__TEMPLATE_DEFORMATION__" "__END_TEMPLATE_
 # Main Script
 # -------------------------------------------
 
- in.deformation{input}
+echo "$template_deformation" > in.deformation{input}
 # File names
 lmp_equil_file=in.deformation{input}
 lmp_restart_file=bulk{input}.{ctemp1}K.$final.restart
