@@ -112,7 +112,7 @@ print                .
 print                =====================================
 print                "NVT dynamics to change temperature"
 print                =====================================
-
+thermo               100
 dump                 1 all custom 1000 ${sname}.cool.lammpstrj id type xu yu zu vx vy vz
 fix                  4 all nvt temp ${ctemp} ${stemp} 100.0
 run                  50000
