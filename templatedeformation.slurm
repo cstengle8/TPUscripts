@@ -43,7 +43,7 @@ cd "$restart_dir" || { echo "Error: Cannot change to directory $restart_dir"; ex
 
 get_max_final() {
   local max=0
-  for file in bulk{input}.{ctemp}K.*.restart; do
+  for file in bulk{input}.{ctemp1}K.*.restart; do
     # Remove the .restart suffix and extract the integer after the last dot
     local num="${file%.restart}"
     num="${num##*.}"
