@@ -22,19 +22,6 @@ module load vmd/1.9.3
 # Embedded Template Loading
 # -------------------------------------------
 
-load_template() {
-    local start_marker="$1"
-    local end_marker="$2"
-    # Use sed to extract lines between markers (excluding the markers themselves)
-    sed -n "/^${start_marker}\$/,/^${end_marker}\$/p" "$0" | sed '1d;$d'
-}
-
-template_deformation=$(load_template "__TEMPLATE_DEFORMATION__" "__END_TEMPLATE_DEFORMATION__")
-
-# -------------------------------------------
-# Main Script
-# -------------------------------------------
-
 restart_dir="./"
 
 cd "$restart_dir" || { echo "Error: Cannot change to directory $restart_dir"; exit 1; }
@@ -57,7 +44,22 @@ get_max_final
 
 sed -i "s/{final}/$final/g" "$0"
 
-echo "$template_deformation" > in.deformation{input}
+echo "$template_deformation" >
+
+load_template() {
+    local start_marker="$1"
+    local end_marker="$2"
+    # Use sed to extract lines between markers (excluding the markers themselves)
+    sed -n "/^${start_marker}\$/,/^${end_marker}\$/p" "$0" | sed '1d;$d'
+}
+
+template_deformation=$(load_template "__TEMPLATE_DEFORMATION__" "__END_TEMPLATE_DEFORMATION__")
+
+# -------------------------------------------
+# Main Script
+# -------------------------------------------
+
+ in.deformation{input}
 # File names
 lmp_equil_file=in.deformation{input}
 lmp_restart_file=bulk{input}.{ctemp1}K.$final.restart
