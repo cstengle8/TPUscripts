@@ -115,7 +115,7 @@ print                =====================================
 
 dump                 1 all custom 1000 ${sname}.cool.lammpstrj id type xu yu zu vx vy vz
 fix                  4 all nvt temp ${ctemp} ${stemp} 100.0
-run                  200000
+run                  50000
 unfix                4
 undump               1
 
@@ -153,7 +153,7 @@ variable t4 equal "eangle"
 variable t5 equal "edihed"
 fix                  shakeH all shake 0.0001 20 500 m 1.0079
 fix		1 all npt temp 100 100 50 y 0 0 1000 z 0 0 1000 drag 2
-fix		2 all deform 1 x erate 1e-5 units box remap x
+fix		2 all deform 1 x erate 1e-6 units box remap x
 fix def1 all print 100 "${p1} ${p2} ${p3} ${p4} ${p5} ${p6} ${p7} ${p8}" file ${sname}.def1.txt screen no
 fix def2 all print 100 "${p1} ${t2} ${t3} ${t4} ${t5}" file ${sname}.def2.txt screen no
 #thermo_style	custom step temp pxx pyy pzz lx ly lz epair ebond eangle edihed
@@ -163,7 +163,7 @@ dump       1 all custom 10000 ${sname}.${stemp}.deform.lammpstrj id type xu yu z
 thermo          100
 timestep	1
 reset_timestep	0
-run		300000
+run		3000000
 unfix 1
 unfix 2
 unfix def1
