@@ -60,7 +60,7 @@ sed -i "s/{final}/$final/g" "$0"
 echo "$template_deformation" > in.deformation{input}
 # File names
 lmp_equil_file=in.deformation{input}
-lmp_restart_file=bulk{input}.{ctemp1}K.{final}.restart
+lmp_restart_file=bulk{input}.{ctemp1}K.$final.restart
 lmp_log_file=deformation{input}.log
 
 # LAMMPS executable and parameters
@@ -95,7 +95,7 @@ dihedral_style       harmonic
 improper_style       umbrella
 kspace_style         pppm 0.00001
 
-read_restart         bulk{input}.{ctemp1}K.{final}.restart
+read_restart         bulk{input}.{ctemp1}K.$final.restart
 
 pair_modify          mix geometric
 neighbor             2.0 multi
