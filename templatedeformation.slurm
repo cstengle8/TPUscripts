@@ -100,7 +100,7 @@ read_restart         bulk{input}.{ctemp1}K.{final}.restart
 pair_modify          mix geometric
 neighbor             2.0 multi
 neigh_modify         every 2 delay 4 check yes
-thermo_style         multi
+thermo_style         custom etotal ke temp pe ebond eangle edihed eimp evdwl ecoul elong press spcpu density
 thermo_modify        line multi format float %14.6f flush yes
 variable             input string in.deformation{input}
 variable             sname string deformation{input}
