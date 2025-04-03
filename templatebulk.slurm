@@ -47,20 +47,17 @@ sed -i '/^CRYSTX/d' replicated{input}_pre.bgf
 
 echo "$template_bulk" > in.bulk{input}
 
-# File names
+
 lmp_equil_file=in.bulk{input}
 lmp_data_file=data.bulk{input}
 lmp_log_file=bulk{input}.log
 
-# LAMMPS executable and parameters
 PARALLEL="mpirun -n 64"
 #Use your lammps directory
 LMP="/home/rramji/codes/LAMMPS/speed_lammps/build_custom/lmp_rob -var rtemp {rtemp2} -var press 1"
 
-# Echo job details
 echo "LAMMPS dynamics of {input}bulk at {rtemp2}K"
 
-# Run LAMMPS
 $PARALLEL $LMP -in ${lmp_equil_file} -log ${lmp_log_file} -var rtemp {rtemp2} -var press 1 -var ctemp {ctemp1}
 
 exit 0 
