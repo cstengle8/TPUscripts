@@ -169,7 +169,7 @@ print                "NPT dynamics to cool system"
 print                =====================================
 
 dump                 1 all custom 1000 ${sname}.cool.lammpstrj id type xu yu zu vx vy vz
-fix                  4 all npt temp ${rtemp} ${ctemp} 100.0
+fix                  4 all npt temp ${rtemp} ${ctemp} 100.0 iso 1.0 1.0 2000.0
 run                  200000
 unfix                4
 undump               1
