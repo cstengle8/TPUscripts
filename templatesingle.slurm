@@ -67,22 +67,18 @@ module load netlib-lapack
 
 echo "$template_minimize" > in.{input}
 
-# File names
 lmp_equil_file=in.{input}
 lmp_data_file=data.{input}
 lmp_log_file={input}.log
 
-# LAMMPS executable and parameters
 PARALLEL="mpirun -n 64"
 #Use your lammps directory
 LMP="/home/rramji/codes/LAMMPS/speed_lammps/build_custom/lmp_rob -var rtemp {rtemp1} -var press 1"
 
 rtemp="{rtemp1}"
 
-# Echo job details
 echo "LAMMPS dynamics of {input} at {rtemp1}K"
 
-# Run LAMMPS
 $PARALLEL $LMP -in ${lmp_equil_file} -log ${lmp_log_file} -var rtemp {rtemp1} -var press 1
 
 mv {input}.mol2 {input}_original.mol2
