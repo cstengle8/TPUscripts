@@ -27,7 +27,6 @@ module load openbabel/3.0.0
 load_template() {
     local start_marker="$1"
     local end_marker="$2"
-    # Use sed to extract lines between markers (excluding the markers themselves)
     sed -n "/^${start_marker}\$/,/^${end_marker}\$/p" "$0" | sed '1d;$d'
 }
 
