@@ -58,20 +58,16 @@ template_deformation=$(load_template "__TEMPLATE_DEFORMATION__" "__END_TEMPLATE_
 # -------------------------------------------
 
 echo "$template_deformation" > in.deformation{input}
-# File names
 lmp_equil_file=in.deformation{input}
 lmp_restart_file=bulk{input}.{ctemp1}K.{final}.restart
 lmp_log_file=deformation{input}.log
 
-# LAMMPS executable and parameters
 PARALLEL="mpirun -n 64"
 #Use your lammps directory
 LMP="/home/rramji/codes/LAMMPS/speed_lammps/build_custom/lmp_rob -var ctemp {ctemp1} -var stemp {stemp1} -var press 1"
 
-# Echo job details
 echo "LAMMPS dynamics of {input}bulk at {stemp1}K"
 
-# Run LAMMPS
 $PARALLEL $LMP -in ${lmp_equil_file} -log ${lmp_log_file} -var ctemp {ctemp1} -var stemp {stemp1} -var press 1
 
 exit 0
