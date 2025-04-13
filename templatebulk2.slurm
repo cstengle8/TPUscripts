@@ -57,18 +57,18 @@ template_bulk2=$(load_template "__TEMPLATE_BULK2__" "__END_TEMPLATE_BULK2__")
 # Main Script
 # -------------------------------------------
 
-echo "$template_deformation" > in.deformation{input}
-lmp_equil_file=in.deformation{input}
-lmp_restart_file=bulk{input}.{ctemp1}K.{final}.restart
-lmp_log_file=deformation{input}.log
+echo "$template_bulk2" > in.bulk{input}_2
+lmp_equil_file=in.bulk{input}_2
+lmp_restart_file=bulk{input}_2.{ctemp1}K.{final}.restart
+lmp_log_file=bulk{input}_2.log
 
 PARALLEL="mpirun -n 64"
 #Use your lammps directory
-LMP="/home/rramji/codes/LAMMPS/speed_lammps/build_custom/lmp_rob -var ctemp {ctemp1} -var stemp {stemp1} -var press 1"
+LMP="/home/rramji/codes/LAMMPS/speed_lammps/build_custom/lmp_rob -var ctemp {ctemp1} -var stemp {rtemp2} -var press 1"
 
 echo "LAMMPS dynamics of {input}bulk at {stemp1}K"
 
-$PARALLEL $LMP -in ${lmp_equil_file} -log ${lmp_log_file} -var ctemp {ctemp1} -var stemp {stemp1} -var press 1
+$PARALLEL $LMP -in ${lmp_equil_file} -log ${lmp_log_file} -var ctemp {ctemp1} -var stemp {rtemp2} -var press 1
 
 exit 0
 # ------------
