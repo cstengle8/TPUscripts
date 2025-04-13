@@ -170,32 +170,4 @@ fix                  4 all npt temp ${rtemp} ${ctemp} 100.0 iso 1.0 1.0 2000.0
 run                  200000
 unfix                4
 undump               1
-
-print                ================================================
-print                "NPT equilibration dynamics "
-print                ================================================
-
-fix                  2 all npt temp ${ctemp} ${ctemp} 100.0 iso 1.0 1.0 2000
-fix recenter all recenter INIT INIT INIT
-restart              100000 ${sname}.${ctemp}K.*.restart
-dump                 1 all custom 1000 ${sname}.${ctemp}K.npt.lammpstrj id type xu yu zu vx vy vz
-run                  1000000 # run for 0.5 ns
-unfix recenter
-unfix                2
-undump               1
-
-print                .
-print                ================================================
-print                "NVT equilibration dynamics "
-print                ================================================
-print                .
-
-fix                  2 all nvt temp ${ctemp} ${ctemp} 100.0
-fix recenter all recenter INIT INIT INIT
-dump                 1 all custom 10000 ${sname}.${ctemp}K.prod.lammpstrj id type xu yu zu vx vy vz
-run                  1000000 # run for 0.5 ns
-unfix recenter
-unfix                2
-unfix                7
-undump               1
 __END_TEMPLATE_BULK__
