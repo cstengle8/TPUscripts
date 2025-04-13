@@ -18,49 +18,60 @@ module load netlib-scalapack
 module load netlib-lapack
 module load vmd/1.9.3
 
-# -----------------------------
+# -------------------------------------------
 # Embedded Template Loading
-# -----------------------------
+# -------------------------------------------
+
+restart_dir="./"
+
+cd "$restart_dir" || { echo "Error: Cannot change to directory $restart_dir"; exit 1; }
+
+#For this to work and give meaningful results one needs a successfully completed bulk equilibration, with restart files. 
+
+get_max_final() {
+  local max=0
+  for file in bulk{input}.{ctemp1}K.*.restart; do
+    # Remove the .restart suffix and extract the integer after the last dot
+    local num="${file%.restart}"
+    num="${num##*.}"
+    # Compare and update max if needed
+    (( num > max )) && max=$num
+  done
+  final=$max
+  echo "$final"
+}
+get_max_final
+
+sed -i "s/{final}/$final/g" "$0"
 
 load_template() {
     local start_marker="$1"
     local end_marker="$2"
-    # Use sed to extract lines between markers (excluding the markers themselves)
+    # Use sed to extract lines between markers 
     sed -n "/^${start_marker}\$/,/^${end_marker}\$/p" "$0" | sed '1d;$d'
 }
 
-template_bulk=$(load_template "__TEMPLATE_BULK__" "__END_TEMPLATE_BULK__")
+template_bulk2=$(load_template "__TEMPLATE_BULK2__" "__END_TEMPLATE_BULK2__")
 
-# -----------------------------
+# -------------------------------------------
 # Main Script
-# -----------------------------
+# -------------------------------------------
 
-~/ATLAS-toolkit/scripts/autoType.pl -i {input}_equil.bgf -f ~/ATLAS-toolkit/ff/DREIDING2.21.ff -t bgf -s {input}typed.bgf
-
-~/ATLAS-toolkit/scripts/replicate.pl -b {input}typed.bgf -d '2 2 2' -s replicated{input}_pre.bgf
-
-sed -i '/^CRYSTX/d' replicated{input}_pre.bgf
-
-~/ATLAS-toolkit/scripts/addBoxToBGF.pl replicated{input}_pre.bgf replicated{input}.bgf
-
-~/ATLAS-toolkit/scripts/createLammpsInput.pl -b replicated{input}.bgf -f "~/ff/DREIDING2.21.ff" -s bulk{input}
-
-echo "$template_bulk" > in.bulk{input}
-
-
-lmp_equil_file=in.bulk{input}
-lmp_data_file=data.bulk{input}
-lmp_log_file=bulk{input}.log
+echo "$template_deformation" > in.deformation{input}
+lmp_equil_file=in.deformation{input}
+lmp_restart_file=bulk{input}.{ctemp1}K.{final}.restart
+lmp_log_file=deformation{input}.log
 
 PARALLEL="mpirun -n 64"
 #Use your lammps directory
-LMP="/home/rramji/codes/LAMMPS/speed_lammps/build_custom/lmp_rob -var rtemp {rtemp2} -var press 1"
+LMP="/home/rramji/codes/LAMMPS/speed_lammps/build_custom/lmp_rob -var ctemp {ctemp1} -var stemp {stemp1} -var press 1"
 
-echo "LAMMPS dynamics of {input}bulk at {rtemp2}K"
+echo "LAMMPS dynamics of {input}bulk at {stemp1}K"
 
-$PARALLEL $LMP -in ${lmp_equil_file} -log ${lmp_log_file} -var rtemp {rtemp2} -var press 1 -var ctemp {ctemp1}
+$PARALLEL $LMP -in ${lmp_equil_file} -log ${lmp_log_file} -var ctemp {ctemp1} -var stemp {stemp1} -var press 1
 
-exit 0 
+exit 0
+# ------------
 
 # -----------------------------
 # Embedded Template Definitions
@@ -68,7 +79,7 @@ exit 0
 
 #Bulk
 
-__TEMPLATE_BULK__
+__TEMPLATE_BULK2__
 units                real
 atom_style           full
 boundary             p p p
@@ -198,4 +209,4 @@ unfix recenter
 unfix                2
 unfix                7
 undump               1
-__END_TEMPLATE_BULK__
+__END_TEMPLATE_BULK2__
