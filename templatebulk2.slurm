@@ -104,7 +104,7 @@ variable             input string in.bulk{input}_2
 variable             sname string bulk{input}_2
                      
                      
-timestep             0.5
+timestep             1
 
 print                ================================================
 print                "NPT equilibration dynamics "
@@ -118,6 +118,8 @@ run                  1000000 # run for 0.5 ns
 unfix recenter
 unfix                2
 undump               1
+
+timestep             0.5
 
 print                .
 print                =====================================
@@ -155,6 +157,7 @@ run                  100000
 unfix                4
 undump               1
 
+timestep             1
 
 print                ================================================
 print                "NPT equilibration dynamics "
