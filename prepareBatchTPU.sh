@@ -76,6 +76,19 @@ perl -pe '
   s/\{account\}/$ENV{"account"}/g;
 ' templatebulk.slurm > "$output_bulk"
 
+output_bulk2="${prefix}bulk2.slurm"
+perl -pe '
+  s/\{input\}/$ENV{"prefix"}/g;
+  s/\{rtemp1\}/$ENV{"rtemp1"}/g;
+  s/\{rtemp2\}/$ENV{"rtemp2"}/g;
+  s/\{ctemp1\}/$ENV{"ctemp"}/g;
+  s/\{partition\}/$ENV{"partition"}/g;
+  s/\{nodes\}/$ENV{"nodes"}/g;
+  s/\{tasks\}/$ENV{"tasks"}/g;
+  s/\{time\}/$ENV{"walltime"}/g;
+  s/\{account\}/$ENV{"account"}/g;
+' templatebulk2.slurm > "$output_bulk2"
+
 output_deformation="${prefix}deformation.slurm"
 perl -pe '
   s/\{input\}/$ENV{"prefix"}/g;
