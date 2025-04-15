@@ -167,7 +167,7 @@ print                =====================================
 
 dump                 1 all custom 1000 ${sname}.cool.lammpstrj id type xu yu zu vx vy vz
 fix                  4 all npt temp ${rtemp} ${ctemp} 100.0 iso 1.0 1.0 2000.0
-restart              100000 ${sname}.${rtemp}K.*.restart
+restart              100000 ${sname}.${ctemp1}K.*.restart
 run                  200000
 unfix                4
 undump               1
