@@ -139,9 +139,9 @@ print                .
                      
 fix                  2 all npt temp ${rtemp} ${rtemp} 100.0 iso 1.0 1.0 2000.0
 fix recenter all recenter INIT INIT INIT
-restart              100000 ${sname}.${rtemp}K.*.restart
 dump                 1 all custom 5000 ${sname}.${rtemp}K.npt.lammpstrj id type xu yu zu vx vy vz
 run                  2000000 # run for 1 ns
+write_restart        ${sname}.${rtemp}K.npt.end.restart
 undump               1
 unfix recenter
 unfix                2
@@ -167,8 +167,8 @@ print                =====================================
 
 dump                 1 all custom 1000 ${sname}.cool.lammpstrj id type xu yu zu vx vy vz
 fix                  4 all npt temp ${rtemp} ${ctemp} 100.0 iso 1.0 1.0 2000.0
-restart              100000 ${sname}.${ctemp}K.*.restart
 run                  200000
+write_restart        ${sname}.${rtemp}K.cool.end.restart
 unfix                4
 undump               1
 __END_TEMPLATE_BULK__
