@@ -112,9 +112,9 @@ print                ================================================
 
 fix                  2 all npt temp ${ctemp} ${ctemp} 100.0 iso 1.0 1.0 2000
 fix recenter all recenter INIT INIT INIT
-restart              100000 ${sname}.${ctemp}K.*.restart
 dump                 1 all custom 1000 ${sname}.${ctemp}K.npt.lammpstrj id type xu yu zu vx vy vz
 run                  1000000 # run for 0.5 ns
+write_restart        ${sname}.${ctemp}K.npt.end.restart
 unfix recenter
 unfix                2
 undump               1
@@ -142,6 +142,7 @@ fix                  2 all nvt temp ${rtemp} ${rtemp} 100.0
 fix recenter all recenter INIT INIT INIT
 dump                 1 all custom 1000 ${sname}.${rtemp}K.prod.lammpstrj id type xu yu zu vx vy vz
 run                  2000000 
+write_restart        ${sname}.${rtemp}K.nvt.end.restart
 unfix                2
 unfix recenter
 undump               1
@@ -165,9 +166,9 @@ print                ================================================
 
 fix                  2 all npt temp ${ctemp} ${ctemp} 100.0 iso 1.0 1.0 2000
 fix recenter all recenter INIT INIT INIT
-restart              100000 ${sname}.${ctemp}K.*.restart
 dump                 1 all custom 1000 ${sname}.${ctemp}K.npt.lammpstrj id type xu yu zu vx vy vz
 run                  2000000 # run for 0.5 ns
+write_restart        ${sname}.${ctemp}K.npt.second.end.restart
 unfix recenter
 unfix                2
 undump               1
