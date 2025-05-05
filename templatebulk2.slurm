@@ -22,26 +22,6 @@ module load vmd/1.9.3
 # Embedded Template Loading
 # -------------------------------------------
 
-restart_dir="./"
-
-cd "$restart_dir" || { echo "Error: Cannot change to directory $restart_dir"; exit 1; }
-
-#For this to work and give meaningful results one needs a successfully completed bulk equilibration, with restart files. 
-
-get_max_final() {
-  local max=0
-  for file in bulk{input}.{ctemp1}K.*.restart; do
-    # Remove the .restart suffix and extract the integer after the last dot
-    local num="${file%.restart}"
-    num="${num##*.}"
-    # Compare and update max if needed
-    (( num > max )) && max=$num
-  done
-  final=$max
-  echo "$final"
-}
-get_max_final
-
 sed -i "s/{final}/$final/g" "$0"
 
 load_template() {
@@ -59,7 +39,7 @@ template_bulk2=$(load_template "__TEMPLATE_BULK2__" "__END_TEMPLATE_BULK2__")
 
 echo "$template_bulk2" > in.bulk{input}_2
 lmp_equil_file=in.bulk{input}_2
-lmp_restart_file=bulk{input}_2.{ctemp1}K.{final}.restart
+lmp_restart_file=bulk{input}.{ctemp1}.cool.end.restart  
 lmp_log_file=bulk{input}_2.log
 
 PARALLEL="mpirun -n 64"
@@ -93,7 +73,7 @@ dihedral_style       harmonic
 improper_style       umbrella
 kspace_style         pppm 0.0001
                      
-read_restart         bulk{input}.{ctemp1}K.{final}.restart   
+read_restart         bulk{input}.{ctemp1}.cool.end.restart   
                      
 pair_modify          mix geometric
 neighbor             2.0 multi
