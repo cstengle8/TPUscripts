@@ -44,11 +44,11 @@ lmp_log_file=bulk{input}_2.log
 
 PARALLEL="mpirun -n 64"
 #Use your lammps directory
-LMP="/home/rramji/codes/LAMMPS/speed_lammps/build_custom/lmp_rob -var ctemp {ctemp1} -var stemp {rtemp2} -var press 1"
+LMP="/home/rramji/codes/LAMMPS/speed_lammps/build_custom/lmp_rob -var ctemp {ctemp1} -var rtemp {rtemp2} -var press 1"
 
 echo "LAMMPS dynamics of {input}bulk at {stemp1}K"
 
-$PARALLEL $LMP -in ${lmp_equil_file} -log ${lmp_log_file} -var ctemp {ctemp1} -var stemp {rtemp2} -var press 1
+$PARALLEL $LMP -in ${lmp_equil_file} -log ${lmp_log_file} -var ctemp {ctemp1} -var rtemp {rtemp2} -var press 1
 
 exit 0
 # ------------
